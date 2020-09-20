@@ -16,7 +16,7 @@ public:
   
   virtual void process()
   {
-    Type elt = this->template getInput<0>().pull();
+    Type elt = this->template getInput<0>().pull().value();
     this->template getOutput<0>().push(std::move(elt));
   }
 };

@@ -8,7 +8,6 @@
 #include <mutex>
 #include <condition_variable>
 
-
 template <typename Elt>
 class Tuyau
 {

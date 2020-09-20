@@ -13,7 +13,7 @@ public:
   
   virtual void process()
   {
-    Type elt = this->template getInput<0>().pull();
+    Type elt = this->template getInput<0>().pull().value();
     Type cpy(elt);
     this->template getOutput<0>().push(std::move(elt));
     this->template getOutput<1>().push(std::move(cpy));
