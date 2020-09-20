@@ -10,22 +10,21 @@
 
 
 template <typename Elt>
-class Tuyau : public TuyauInput<Elt>, public TuyauOutput<Elt>
+class Tuyau
 {
 public:
   Tuyau();
+
+  TuyauInput<Elt>&  input();
+  TuyauOutput<Elt>& output();
   
-  virtual void push(Elt&& elt);
-  virtual Elt  pull();
-  virtual bool hasData() const;
-
 private:
-  bool hasDataImpl() const;
-
+  std::queue<Elt>         queue_;
   mutable std::mutex      queueGuard_;
   std::condition_variable queueSizeIsValid_;
 
-  std::queue<Elt> queue_;
+  TuyauInput<Elt>  input_;
+  TuyauOutput<Elt> output_;
 };
 
 #include "impl/Tuyau.hxx" 

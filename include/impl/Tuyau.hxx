@@ -1,43 +1,19 @@
-#include <functional>
-
 template <typename Elt>
 Tuyau<Elt>::Tuyau()
+  : input_(queue_, queueGuard_, queueSizeIsValid_)
+  , output_(queue_, queueGuard_, queueSizeIsValid_)
 {
 }
 
 template <typename Elt>
-void Tuyau<Elt>::push(Elt&& elt)
+TuyauInput<Elt>& Tuyau<Elt>::input()
 {
-  std::unique_lock<std::mutex> lock(queueGuard_);
-
-  queue_.push(elt);
-
-  queueSizeIsValid_.notify_one();
+  return input_;
 }
 
 template <typename Elt>
-bool Tuyau<Elt>::hasData() const
+TuyauOutput<Elt>& Tuyau<Elt>::output()
 {
-  std::unique_lock<std::mutex> lock(queueGuard_);
-  return hasDataImpl();
+  return output_;
 }
-
-template <typename Elt>
-bool Tuyau<Elt>::hasDataImpl() const
-{
-  return !queue_.empty();
-}
-
-template <typename Elt>
-Elt Tuyau<Elt>::pull()
-{
-  std::unique_lock<std::mutex> lock(queueGuard_);
-
-  // Wait until there is some data in the queue
-  queueSizeIsValid_.wait(lock, std::bind(&Tuyau<Elt>::hasDataImpl, this));
-
-  Elt ret = std::move(queue_.front());
-  queue_.pop();
-
-  return ret;
-}
+  
