@@ -48,3 +48,16 @@ unsigned int BasicBuffer::size() const
 {
   return size_;
 }
+
+BasicBuffer* BasicBuffer::split(unsigned int index)
+{
+  unsigned int sizeOfNewBuffer = size_ - index;
+  BasicBuffer* ret = new BasicBuffer(sizeOfNewBuffer);
+
+  for (unsigned int i = index; i < size_; i++)
+    (*ret)[i - index] = data_[i];
+
+  size_ = index;
+
+  return ret;
+}
