@@ -15,6 +15,7 @@ public:
   virtual const unsigned char& operator[](unsigned int index) const;
   virtual unsigned int size() const;
   virtual BasicBuffer* split(unsigned int index);
+  virtual void dump(unsigned char* dst) const;
 
 private:
   unsigned char* data_;

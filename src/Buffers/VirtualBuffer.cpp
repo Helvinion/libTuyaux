@@ -68,3 +68,13 @@ VirtualBuffer* VirtualBuffer::split(unsigned int index)
 
   return ret;
 }
+void VirtualBuffer::dump(unsigned char* dst) const
+{
+  unsigned int index = 0;
+
+  for (const auto& elt : buffers_)
+  {
+    elt->dump(dst + index);
+    index += elt->size();
+  }
+}

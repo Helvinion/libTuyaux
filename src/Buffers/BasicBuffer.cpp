@@ -1,5 +1,7 @@
 #include <Buffers/BasicBuffer.hpp>
 
+#include <cstring>
+
 BasicBuffer::BasicBuffer(unsigned int size)
   : data_(nullptr)
   , size_(size)
@@ -60,4 +62,9 @@ BasicBuffer* BasicBuffer::split(unsigned int index)
   size_ = index;
 
   return ret;
+}
+
+void BasicBuffer::dump(unsigned char* dst) const
+{
+  std::memcpy(dst, data_, size_);
 }
