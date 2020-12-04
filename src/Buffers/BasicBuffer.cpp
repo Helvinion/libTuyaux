@@ -3,10 +3,10 @@
 #include <cstring>
 
 BasicBuffer::BasicBuffer(unsigned int size)
-  : data_(nullptr)
+  : data_(new unsigned char[size])
+  , index_(0)
   , size_(size)
 {
-  data_ = new unsigned char[size_];
 }
 
 BasicBuffer::BasicBuffer(unsigned char* data, unsigned int size)
@@ -23,12 +23,21 @@ BasicBuffer::BasicBuffer(const Buffer& buffer)
 }
 
 BasicBuffer::BasicBuffer(BasicBuffer&& buffer)
-  : BasicBuffer(buffer.data_, buffer.size_)
+  : data_(std::move(buffer.data_))
+  , index_(buffer.index_)
+  , size_(buffer.size_)
 {
-  buffer.data_ = nullptr;
+  buffer.index_ = 0;
   buffer.size_ = 0;
 }
 
+BasicBuffer::BasicBuffer(BasicBuffer& buffer, unsigned int index)
+  : data_(buffer.data_)
+  , index_(buffer.index_ + index)
+  , size_(buffer.size_ - index)
+{
+  buffer.size_ = index;
+}
 
 unsigned char& BasicBuffer::operator[](unsigned int index)
 {
@@ -53,18 +62,11 @@ unsigned int BasicBuffer::size() const
 
 BasicBuffer* BasicBuffer::split(unsigned int index)
 {
-  unsigned int sizeOfNewBuffer = size_ - index;
-  BasicBuffer* ret = new BasicBuffer(sizeOfNewBuffer);
-
-  for (unsigned int i = index; i < size_; i++)
-    (*ret)[i - index] = data_[i];
-
-  size_ = index;
-
+  BasicBuffer* ret = new BasicBuffer(*this, index);
   return ret;
 }
 
 void BasicBuffer::dump(unsigned char* dst) const
 {
-  std::memcpy(dst, data_, size_);
+  std::memcpy(dst, data_.get(), size_);
 }
