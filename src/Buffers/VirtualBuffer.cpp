@@ -68,6 +68,19 @@ VirtualBuffer* VirtualBuffer::split(unsigned int index)
 
   return ret;
 }
+
+void VirtualBuffer::push_back(Buffer* buffer)
+{
+  buffers_.push_back(buffer);
+  size_ += buffer->size();
+}
+
+void VirtualBuffer::push_front(Buffer* buffer)
+{
+  buffers_.push_front(buffer);
+  size_ += buffer->size();
+}
+
 void VirtualBuffer::dump(unsigned char* dst) const
 {
   unsigned int index = 0;

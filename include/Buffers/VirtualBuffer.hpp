@@ -17,6 +17,9 @@ public:
   virtual VirtualBuffer* split(unsigned int index);
   virtual void dump(unsigned char* dst) const;
 
+  void push_back(Buffer* buffer);
+  void push_front(Buffer* buffer);
+
 private: 
   std::deque<Buffer*> buffers_;
   unsigned int        size_;
