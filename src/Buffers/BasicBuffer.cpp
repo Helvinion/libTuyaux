@@ -11,6 +11,7 @@ BasicBuffer::BasicBuffer(unsigned int size)
 
 BasicBuffer::BasicBuffer(unsigned char* data, unsigned int size)
   : data_(data)
+  , index_(0)
   , size_(size)
 {
 }
@@ -20,6 +21,11 @@ BasicBuffer::BasicBuffer(const Buffer& buffer)
 {
   for (unsigned i = 0; i < size_; i++)
     data_[i] = buffer[i];
+}
+
+BasicBuffer::BasicBuffer(const BasicBuffer& buffer)
+  : BasicBuffer(static_cast<const Buffer&>(buffer))
+{
 }
 
 BasicBuffer::BasicBuffer(BasicBuffer&& buffer)
@@ -39,12 +45,16 @@ BasicBuffer::BasicBuffer(BasicBuffer& buffer, unsigned int index)
   buffer.size_ = index;
 }
 
+BasicBuffer::~BasicBuffer()
+{
+}
+
 unsigned char& BasicBuffer::operator[](unsigned int index)
 {
   if (index > size_ || data_ == nullptr)
       throw 42;
 
-    return data_[index];
+    return data_[index_ + index];
 }
 
 const unsigned char& BasicBuffer::operator[](unsigned int index) const
@@ -52,7 +62,7 @@ const unsigned char& BasicBuffer::operator[](unsigned int index) const
   if (index > size_ || data_ == nullptr)
       throw 42;
 
-    return data_[index];
+    return data_[index_ + index];
 }
 
 unsigned int BasicBuffer::size() const
@@ -68,5 +78,5 @@ BasicBuffer* BasicBuffer::split(unsigned int index)
 
 void BasicBuffer::dump(unsigned char* dst) const
 {
-  std::memcpy(dst, data_.get(), size_);
+  std::memcpy(dst, data_.get() + index_, size_);
 }

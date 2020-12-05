@@ -10,8 +10,10 @@ public:
   BasicBuffer(unsigned int size);
   BasicBuffer(unsigned char* data, unsigned int size);
   BasicBuffer(const Buffer& buffer);
+  BasicBuffer(const BasicBuffer& buffer);
   BasicBuffer(BasicBuffer&& buffer);
   BasicBuffer(BasicBuffer& buffer, unsigned int index);
+  virtual ~BasicBuffer();
   
   virtual unsigned char& operator[](unsigned int index);
   virtual const unsigned char& operator[](unsigned int index) const;

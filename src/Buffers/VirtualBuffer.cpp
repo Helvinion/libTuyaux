@@ -1,4 +1,5 @@
 #include <Buffers/VirtualBuffer.hpp>
+#include <Buffers/BasicBuffer.hpp>
 
 VirtualBuffer::VirtualBuffer(Buffer* buffer)
   : size_(buffer->size())
@@ -10,6 +11,19 @@ VirtualBuffer::VirtualBuffer(VirtualBuffer&& buffer)
   : buffers_(std::move(buffer.buffers_))
   , size_(buffer.size_)
 {
+}
+
+VirtualBuffer::VirtualBuffer()
+  : size_(0)
+{
+}
+
+VirtualBuffer::~VirtualBuffer()
+{
+  for (auto elt: buffers_)
+  {
+    delete elt;
+  }
 }
 
 unsigned char& VirtualBuffer::operator[](unsigned int index)
@@ -49,8 +63,7 @@ VirtualBuffer* VirtualBuffer::split(unsigned int index)
   unsigned int currentSize = 0;
 
   // This split is more efficient if we start by its end.
-  VirtualBuffer* ret = new VirtualBuffer(buffers_.back());
-  buffers_.pop_back();
+  VirtualBuffer* ret = new VirtualBuffer();
 
   while (currentSize + buffers_.back()->size() <= futureSize)
   {
@@ -65,6 +78,9 @@ VirtualBuffer* VirtualBuffer::split(unsigned int index)
     unsigned int missing = futureSize - currentSize;
     ret->buffers_.push_front(buffers_.back()->split(buffers_.back()->size() - missing));
   }
+
+  size_ = index;
+  ret->size_ = futureSize;
 
   return ret;
 }

@@ -10,7 +10,8 @@ class VirtualBuffer : public Buffer
 public:
   VirtualBuffer(Buffer* buffer);
   VirtualBuffer(VirtualBuffer&& buffer);
-
+  virtual ~VirtualBuffer();
+  
   virtual unsigned char& operator[](unsigned int index);
   virtual const unsigned char& operator[](unsigned int index) const;
   virtual unsigned int size() const;
@@ -20,7 +21,9 @@ public:
   void push_back(Buffer* buffer);
   void push_front(Buffer* buffer);
 
-private: 
+private:
+
+  VirtualBuffer();
   std::deque<Buffer*> buffers_;
   unsigned int        size_;
 };
