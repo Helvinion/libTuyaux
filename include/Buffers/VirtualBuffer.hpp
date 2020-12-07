@@ -11,6 +11,8 @@ public:
   VirtualBuffer(Buffer* buffer);
   VirtualBuffer(VirtualBuffer&& buffer);
   virtual ~VirtualBuffer();
+
+  VirtualBuffer& operator=(VirtualBuffer&& buffer);
   
   virtual unsigned char& operator[](unsigned int index);
   virtual const unsigned char& operator[](unsigned int index) const;

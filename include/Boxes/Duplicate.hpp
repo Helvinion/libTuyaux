@@ -2,7 +2,7 @@
 # define INCLUDE_BOXES_DUPLICATE_HPP
 
 template <typename Type>
-class Duplicate : public Box<std::tuple<Type>, std::tuple<Type, Type>>
+class Duplicate : public SyncBox<std::tuple<Type>, std::tuple<Type, Type>>
 {
 public:
 

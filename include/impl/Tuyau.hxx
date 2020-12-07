@@ -6,6 +6,12 @@ Tuyau<Elt>::Tuyau()
 }
 
 template <typename Elt>
+Tuyau<Elt>::~Tuyau()
+{
+  std::unique_lock<std::mutex> lock(queueGuard_);
+}
+
+template <typename Elt>
 TuyauInput<Elt>& Tuyau<Elt>::input()
 {
   return input_;

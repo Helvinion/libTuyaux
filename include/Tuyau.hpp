@@ -13,6 +13,7 @@ class Tuyau
 {
 public:
   Tuyau();
+  ~Tuyau();
 
   TuyauInput<Elt>&  input();
   TuyauOutput<Elt>& output();

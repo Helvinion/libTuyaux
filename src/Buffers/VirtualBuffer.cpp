@@ -18,12 +18,22 @@ VirtualBuffer::VirtualBuffer()
 {
 }
 
+#include <iostream>
+
 VirtualBuffer::~VirtualBuffer()
 {
   for (auto elt: buffers_)
   {
     delete elt;
   }
+}
+
+VirtualBuffer& VirtualBuffer::operator=(VirtualBuffer&& buffer)
+{
+  buffers_ = std::move(buffer.buffers_);
+  size_ = buffer.size_;
+  buffer.size_ = 0;
+  return *this;
 }
 
 unsigned char& VirtualBuffer::operator[](unsigned int index)

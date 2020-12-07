@@ -14,7 +14,6 @@ public:
   TuyauInput(std::queue<Elt>& queue, std::mutex& queueGuard, std::condition_variable& queueSizeIsValid);
 
   void push(Elt&& elt);
-
 private:
   // We only have references, it's the responsability of
   // the creator of the object to keep them alive

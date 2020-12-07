@@ -5,7 +5,7 @@
 #include <Tuyau.hpp>
 
 template <typename Type>
-class Forward : public Box<std::tuple<Type>, std::tuple<Type>>
+class Forward : public SyncBox<std::tuple<Type>, std::tuple<Type>>
 {
 public:
 

@@ -5,12 +5,12 @@
 #include <Tuyau.hpp>
 
 template <typename Type>
-class Discard : public Box<std::tuple<Type>, std::tuple<>>
+class Discard : public SyncBox<std::tuple<Type>, std::tuple<>>
 {
 public:
 
   Discard(TuyauOutput<Type>& in)
-    : Box<std::tuple<Type>, std::tuple<>>(std::forward_as_tuple(in), std::forward_as_tuple())
+    : SyncBox<std::tuple<Type>, std::tuple<>>(std::forward_as_tuple(in), std::forward_as_tuple())
   {
   }
   

@@ -12,7 +12,7 @@ void TuyauInput<Elt>::push(Elt&& elt)
 {
   std::unique_lock<std::mutex> lock(queueGuard_);
 
-  queue_.push(elt);
+  queue_.push(std::move(elt));
 
   queueSizeIsValid_.notify_one();
 }
