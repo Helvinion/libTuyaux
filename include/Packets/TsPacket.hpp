@@ -28,6 +28,44 @@ public:
     WithPayload = 3
   };
 
+  enum class Field
+  {
+    ErrorBit,
+    StartBit,
+    PriorityBit,
+    Pid,
+    Tsc,
+    Afc,
+    Counter,
+    AfLength,
+    AfDiscontinuity,
+    AfRandomAccess,
+    AfEsPriority,
+    AfPcrFlag,
+    AfOpcrFlag,
+    AfSpicingFlag,
+    AfPrivateDataFlag,
+    AfExtensionFlag,
+    AfPcr,
+    AfOpcr,
+    AfSpliceCountdown,
+    AfPrivateDataLength,
+    AfPrivateData,
+    AfExtensionLength,
+    AfLtwFlag,
+    AfPiecewiseRateFlag,
+    AfSeamlessSpliceFlag,
+    AfLtwValid,
+    AfLtwOffset,
+    AfPiecewiseRate,
+    AfSpliceType,
+    AfDtsNext,
+    Payload
+  };
+
+  int getAdaptationFieldIndex(TsPacket::Field field) const;
+  int getFieldIndex(Field field) const;
+
   // Header
   bool     getError() const;
   bool     getStart() const;
@@ -63,6 +101,7 @@ public:
   uint64_t afDts() const;
 
   uint8_t  payload(uint8_t index) const;
+  VirtualBuffer extractPayload();
 
 private:
   VirtualBuffer data_;
