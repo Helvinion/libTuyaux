@@ -1,5 +1,8 @@
 #include "gtest/gtest.h"
 
+#include <chrono>
+#include <thread>
+
 #include <Buffers/BasicBuffer.hpp>
 #include <Boxes/Discard.hpp>
 #include <Boxes/NoiseGenerator.hpp>
@@ -21,6 +24,8 @@ TEST_F (DiscardBoxTest, Constructions)
     Discard<VirtualBuffer> box(tuyau.output());
     NoiseGenerator generator(tuyau.input(), 10000, 1000);
 
+    using namespace std::chrono_literals;
     generator.start();
+    std::this_thread::sleep_for(1s);
     generator.stop();
 }
