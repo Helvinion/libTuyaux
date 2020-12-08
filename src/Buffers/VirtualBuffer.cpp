@@ -18,7 +18,13 @@ VirtualBuffer::VirtualBuffer()
 {
 }
 
-#include <iostream>
+VirtualBuffer::VirtualBuffer(const VirtualBuffer& buffer)
+  : size_(buffer.size_)
+{
+  uint8_t* data = new uint8_t[size_];
+  buffer.dump(data);
+  buffers_.push_back(new BasicBuffer(data, size_));
+}
 
 VirtualBuffer::~VirtualBuffer()
 {

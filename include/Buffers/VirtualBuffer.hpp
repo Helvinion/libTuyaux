@@ -10,6 +10,7 @@ class VirtualBuffer : public Buffer
 public:
   VirtualBuffer(Buffer* buffer);
   VirtualBuffer(VirtualBuffer&& buffer);
+  VirtualBuffer(const VirtualBuffer& buffer);
   virtual ~VirtualBuffer();
 
   VirtualBuffer& operator=(VirtualBuffer&& buffer);

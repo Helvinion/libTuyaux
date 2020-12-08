@@ -10,7 +10,7 @@ class Forward : public SyncBox<std::tuple<Type>, std::tuple<Type>>
 public:
 
   Forward(TuyauOutput<Type>& in, TuyauInput<Type>& out)
-    : Box<std::tuple<Type>, std::tuple<Type>>(std::forward_as_tuple(in), std::forward_as_tuple(out))
+    : SyncBox<std::tuple<Type>, std::tuple<Type>>(std::forward_as_tuple(in), std::forward_as_tuple(out))
   {
   }
   
